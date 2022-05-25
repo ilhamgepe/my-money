@@ -6,7 +6,9 @@ import { useLogout } from "../../hooks/useLogout";
 export default function Navbar() {
   const { logout } = useLogout();
   const { user } = useAuthContext();
-  console.log(user.displayName);
+  if (user) {
+    console.log(user.user.displayName);
+  }
   return (
     <div className="navbar bg-green-500/20">
       <div className=" container p-5 mx-auto">
