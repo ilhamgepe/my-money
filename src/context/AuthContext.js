@@ -27,8 +27,9 @@ export const AuthContextProvider = ({ children }) => {
                 type: 'AUTH_IS_READY',
                 payload: user
             })
+            unsub()
         })
-        return () => unsub()
+        // return () => unsub()
     }, [])
     console.log('auth context state: ', state);
     return (

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useAuthContext } from "../../hooks/useAuthContext";
 import { useLogout } from "../../hooks/useLogout";
@@ -6,16 +6,17 @@ import { useLogout } from "../../hooks/useLogout";
 export default function Navbar() {
   const { logout } = useLogout();
   const { user } = useAuthContext();
-  if (user) {
-    console.log(user.user.displayName);
-  }
+  console.log("user adalah:", user);
+  useEffect(() => {
+    console.log("user adalah:", user);
+  }, [user]);
   return (
     <div className="navbar bg-green-500/20">
       <div className=" container p-5 mx-auto">
         <ul className="flex items-center">
           <li>
             <Link to={`/`} className={`text-3xl font-bold`}>
-              MyMoney
+              MyMoney like
             </Link>
           </li>
           {!user && (
