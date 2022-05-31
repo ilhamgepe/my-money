@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 import { useAuthContext } from "../../hooks/useAuthContext";
 import { useLogout } from "../../hooks/useLogout";
@@ -6,17 +6,14 @@ import { useLogout } from "../../hooks/useLogout";
 export default function Navbar() {
   const { logout } = useLogout();
   const { user } = useAuthContext();
-  console.log("user adalah:", user);
-  useEffect(() => {
-    console.log("user adalah:", user);
-  }, [user]);
+
   return (
-    <div className="navbar bg-green-500/20">
-      <div className=" container p-5 mx-auto">
+    <div className="navbar bg-green-500/20 p-5">
+      <div className="container mx-auto">
         <ul className="flex items-center">
           <li>
             <Link to={`/`} className={`text-3xl font-bold`}>
-              MyMoney like
+              MyMoney
             </Link>
           </li>
           {!user && (
@@ -36,12 +33,14 @@ export default function Navbar() {
           {user && (
             <>
               <li className="ml-auto">
-                <p className="mr-5 text-xl font-medium">Hello, {user.displayName}</p>
+                <p className="mr-5 text-xl font-medium">
+                  Hello, {user.displayName}
+                </p>
               </li>
               <li className="">
                 <button
                   onClick={logout}
-                  className="py-1 px-4 mx-3 rounded-md border-4 border-green-500/40 my-5 hover:bg-green-500/50 hover:text-white hover:border-transparent text-slate-800/70 transition-all duration-150 text-xl font-medium"
+                  className="py-1 px-4 mx-3 rounded-md border-4 border-green-500/40 hover:bg-green-500/50 hover:text-white hover:border-transparent text-slate-800/70 transition-all duration-150 text-xl font-medium"
                 >
                   Logout
                 </button>

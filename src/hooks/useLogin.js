@@ -20,9 +20,7 @@ export const useLogin = () => {
             //dispacth login action
             dispatch({
                 type: 'LOGIN',
-                payload: {
-                    user: res.user
-                }
+                payload: res.user
             })
             console.log(res);
             if (!isCancelled) {
