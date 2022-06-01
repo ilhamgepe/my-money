@@ -18,11 +18,6 @@ export default function TransactionForm({ uid }) {
     }
   }, [response.success]);
 
-  function numberWithCommas(value) {
-    let amount = value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-    return amount;
-  }
-  console.log(numberWithCommas("100000"));
   return (
     <div className="">
       <h3 className="title">Add a Transaction</h3>

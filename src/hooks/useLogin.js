@@ -7,7 +7,6 @@ export const useLogin = () => {
     const [error, setError] = useState(null);
     const [pending, setPending] = useState(false);
     const { dispatch } = useAuthContext()
-
     const login = async (email, password) => {
         setError(null);
         setPending(true);
@@ -22,7 +21,7 @@ export const useLogin = () => {
                 type: 'LOGIN',
                 payload: res.user
             })
-            console.log(res);
+            // console.log(res);
             if (!isCancelled) {
                 setError(null);
                 setPending(false);

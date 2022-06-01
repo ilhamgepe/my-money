@@ -1,0 +1,18 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /transactions/{document=**} {
+      // allow read, write;
+      // allow read, create, delete, update;
+
+      //only authorized users can create
+      allow create: if request.auth != null;
+
+      //logged in user uid must match the document creator to read and delete
+      allow read, delete: if request.auth.uid == resource.data.uid;
+    }
+  }
+}
+
+//untuk deploy hanya 1 saja. ketik, firebase deploy --only firestore
+//karna kita cuma pgn deploy file ini saja. kalo langsung di ketik firebase deploy, maka seluruh aplikasi akan ter deploy

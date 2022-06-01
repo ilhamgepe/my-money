@@ -3,18 +3,22 @@ import { useEffect, useRef, useState } from "react"
 //firestore
 import { projectFireStore } from '../firebase/config'
 
-export const useCollection = (collection, _query) => {
+export const useCollection = (collection, _query, _orderBy) => {
     const [documents, setDocuments] = useState(null)
     const [error, setError] = useState(null)
     //kenapa kita gunakan useRef? karena _query/query itu kita bungkus dalam array
     //  ex:["uid","==",user.uid,], jadi ketika apapun komponen menggunakan useCollection dan menggunakan parameter ke 2 yaitu _query. component akan merender terus karna ITU ARRAY, array akan selalu di taro di random memori, jd ketika render pertama pasti terlihat berbeda walau isinya sama, mangkanya kita pake useref, useref ini bisa di buat edit DOM dan mengecek apakah isi si _query itu sama atau tidak, kalo sama jadi tetap di simpan di memori yg sama, yg mengakibatkan tidak terjadi infinity loop. mangkanya kita pakai useref dari pada langsung mengkonsumsi array dari _query 
     const query = useRef(_query).current
+    const orderBy = useRef(_orderBy).current
 
     useEffect(() => {
         let ref = projectFireStore.collection(collection)
 
         if (query) {
             ref = ref.where(...query)
+        }
+        if (orderBy) {
+            ref = ref.orderBy(...orderBy)
         }
 
         const unsubscribe = ref.onSnapshot(snapshot => {
@@ -34,14 +38,18 @@ export const useCollection = (collection, _query) => {
 
             setError(null)
         }, (error) => {
-            console.log(error.message);
-            setError('could not fetch data')
+            if (error.message === 'Missing or insufficient permissions.') {
+                setError(null)
+            } else {
+                console.log(error.message);
+                setError('could not fetch data')
+            }
         })
 
         return () => {
             unsubscribe()
         }
-    }, [collection, query])
+    }, [collection, query, orderBy])
 
     return { documents, error }
 }
