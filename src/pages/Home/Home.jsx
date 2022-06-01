@@ -6,10 +6,11 @@ import TransactionList from "../../components/TransactionList/TransactionList";
 
 export default function Home() {
   const { user } = useAuthContext();
-  const { documents, error } = useCollection("transactions", null, [
-    "createdAt",
-    "desc",
-  ]);
+  const { documents, error } = useCollection(
+    "transactions",
+    ["uid", "==", user.uid],
+    ["createdAt", "desc"]
+  );
   // console.log(documents);
   return (
     <div className="container mx-auto py-5">
