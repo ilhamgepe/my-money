@@ -13,7 +13,7 @@ export default function Navbar() {
         <ul className="flex items-center">
           <li>
             <Link to={`/`} className={`text-3xl font-bold`}>
-              MyMoney
+              MyMoneyApp
             </Link>
           </li>
           {!user && (
